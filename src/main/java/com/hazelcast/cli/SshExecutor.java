@@ -1,14 +1,12 @@
 package com.hazelcast.cli;
 
-import com.jcraft.jsch.ChannelExec;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
-
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
+
+import com.jcraft.jsch.ChannelExec;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.Session;
 
 /**
  * Created by emrah on 12/06/15.
@@ -41,6 +39,7 @@ public class SshExecutor {
                 out = msg;
                 if (breakProcess) {
                     break;
+                   
                 }
             }
             return out;
