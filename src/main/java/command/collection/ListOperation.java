@@ -17,14 +17,16 @@ public class ListOperation extends CollectionOperation {
 	private static Logger logger = LoggerFactory.getLogger(ListOperation.class);
 	private List<Object> list;
 	
-	public ListOperation(HazelcastInstance instance){
-		super(instance);
-		setCommandList(createCommandList());
-		this.list = instance.getList(CLI.nameSpace);
+	public ListOperation() { 
+		super();
+	}
+	
+	public void setCollection(){
+		list = getInstance().getList(CLI.nameSpace);
 	}
 	
 	@Override
-	public Map<String, Runnable> createCommandList(){
+	public void createCommandList(){
 		Map<String, Runnable> map = new HashMap<String, Runnable>();
 		
 		logger.info("List command list is creating");
@@ -39,7 +41,7 @@ public class ListOperation extends CollectionOperation {
 		map.put("remove", () -> remove(Integer.parseInt(CLI.command[2])));
 		map.put("clear", () -> clear());
 		
-		return map;
+		setCommandList(map);
 	}
 	
 	public void getMany(String parameter){

@@ -11,20 +11,21 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.hazelcast.cli.CLI;
-import com.hazelcast.core.HazelcastInstance;
 
 public class SetOperation extends CollectionOperation{
 	private static Logger logger = LoggerFactory.getLogger(SetOperation.class);
 	private Set<Object> set;
 	
-	public SetOperation(HazelcastInstance instance){
-		super(instance);
-		setCommandList(createCommandList());
-		this.set = instance.getSet(CLI.nameSpace);
+	public SetOperation() {
+		super();
 	}
 
+	public void setCollection(){
+		set = getInstance().getSet(CLI.nameSpace);
+	}
+	
 	@Override
-	public Map<String, Runnable> createCommandList() {
+	public void createCommandList() {
 		Map<String, Runnable> map = new HashMap<String, Runnable>();
 		
 		logger.info("Set command list is creating");
@@ -35,7 +36,7 @@ public class SetOperation extends CollectionOperation{
 		map.put("size", () -> getSize());
 		map.put("clear", () -> clearSet());
 		
-		return map;
+		setCommandList(map);
 	}
 	
 	public void clearSet(){
@@ -68,6 +69,7 @@ public class SetOperation extends CollectionOperation{
 	public void add(Object value){
 		logger.info("Object is being added");
 		set.add(value);
+		System.out.println(true);
 	}
 	
 	public void getAllValue(){

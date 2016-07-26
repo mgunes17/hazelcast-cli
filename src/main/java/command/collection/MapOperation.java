@@ -8,21 +8,22 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.hazelcast.cli.CLI;
-import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 
 public class MapOperation extends CollectionOperation{
 	private static Logger logger = LoggerFactory.getLogger("ListOperation");
 	private IMap<Object, Object> map;
 	
-	public MapOperation(HazelcastInstance instance){
-		super(instance);
-		setCommandList(createCommandList());
-		this.map = instance.getMap(CLI.nameSpace);
+	public MapOperation() {
+		super();
+	}
+	
+	public void setCollection(){
+		map = getInstance().getMap(CLI.nameSpace);
 	}
 	
 	@Override
-	public Map<String, Runnable> createCommandList() {
+	public void createCommandList() {
         Map<String, Runnable> map = new HashMap<String, Runnable>();
         
         logger.info("Map Collection command list is creating");
@@ -40,7 +41,7 @@ public class MapOperation extends CollectionOperation{
 		map.put("trylock", () -> tryLockKey(CLI.command[2]));
 		map.put("unlock", () -> unlockKey(CLI.command[2]));
 		
-		return map;
+		setCommandList(map);
 	}
 	
 	public void tryLockKey(Object key){

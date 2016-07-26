@@ -10,20 +10,21 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.hazelcast.cli.CLI;
-import com.hazelcast.core.HazelcastInstance;
 
 public class QueueOperation extends CollectionOperation{
 	private static Logger logger = LoggerFactory.getLogger(QueueOperation.class);
 	private Queue<Object> queue;
 
-	public QueueOperation(HazelcastInstance instance){
-		super(instance);
-		setCommandList(createCommandList());
-		this.queue = instance.getQueue(CLI.nameSpace);
+	public QueueOperation() { 
+		super();
+	}
+	
+	public void setCollection(){
+		queue = getInstance().getQueue(CLI.nameSpace);
 	}
 	
 	@Override
-	public Map<String, Runnable> createCommandList() {
+	public void createCommandList() {
 		Map<String, Runnable> map = new HashMap<String, Runnable>();
 		
 		logger.info("Queue command list is creating");
@@ -36,7 +37,7 @@ public class QueueOperation extends CollectionOperation{
 		map.put("peek", () -> peekValue());
 		map.put("clear", () -> clear() );
 		
-		return map;
+		setCommandList(map);
 	}
 	
 	public void clear(){

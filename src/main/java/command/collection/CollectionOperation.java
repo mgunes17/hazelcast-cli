@@ -16,11 +16,12 @@ public abstract class CollectionOperation {
 	private Class<?> classType;
 	private ObjectMapper objectMapper;
 	
-	public abstract Map<String, Runnable> createCommandList();
+	public abstract void createCommandList();
+	public abstract void setCollection();
 	
-	public CollectionOperation(HazelcastInstance instance){
-		this.instance = instance;
+	public CollectionOperation() { 
 		objectMapper = new ObjectMapper();
+		createCommandList();
 	}
 	
 	public void runDefined(){
